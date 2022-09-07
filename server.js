@@ -51,7 +51,7 @@ app.post("/invoice", async (req, res) => {
     ) {
       return res.status(200).json({
         ...request,
-        redirect_url: `https://ecommerce.golomtbank.com/payment/mn/${request.invoice}`,
+        redirect_url: `https://ecommerce.golomtbank.com/socialpay/mn/${request.invoice}`,
       });
     } else {
       return res.status(400).json({
