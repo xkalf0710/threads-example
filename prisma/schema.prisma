@@ -12,5 +12,5 @@ datasource db {
 
 model invoice {
   id     Int @id @default(autoincrement())
-  amount Int
+  amount Float
 }
