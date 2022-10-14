@@ -15,3 +15,8 @@ model Token {
   access_token  String @db.LongText
   refresh_token String @db.LongText
 }
+
+model Shalgah{
+  id Int @id @default(autoincrement())
+  keyword String?
+}
