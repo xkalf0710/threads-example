@@ -58,6 +58,7 @@ app.post("/invoice", async (req, res) => {
         }),
       })
     ).json();
+
     // irsen data zuv eshiig shalgah 0
     if (
       response.checksum ===
@@ -97,11 +98,7 @@ app.get("/invoice/check/:id", async (req, res) => {
     })
   ).json();
 
-  // return res.status(200).json(response);
-
-  res.sendFile(
-    path.json(__dirname, "index.html")
-  );
+  return res.status(200).json(response);
 });
 
 app.listen(3000, () => {
