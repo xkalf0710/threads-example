@@ -8,7 +8,17 @@ const {HmacSHA256} = crypto;
 
 const prisma = new PrismaClient();
 
+import * as http from 'http';
+const server = http.createServer(app);
+import {Server} from 'socket.io';
+const io = new Server(server);
+
+//io.listen(3000);
+
+
 app.use(express.json());
+
+
 
 //localhost:3000 /invoice 
 app.post("/invoice", async (req, res) => {
@@ -87,9 +97,14 @@ app.get("/invoice/check/:id", async (req, res) => {
     })
   ).json();
 
-  return res.status(200).json(response);
+  // return res.status(200).json(response);
+
+  res.sendFile(
+    path.json(__dirname, "index.html")
+  );
 });
 
 app.listen(3000, () => {
   console.log("server started");
 });
+
