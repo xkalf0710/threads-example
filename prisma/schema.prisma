@@ -10,7 +10,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model invoice {
-  id     Int @id @default(autoincrement())
-  amount Float
+model Token {
+  id            Int    @id @default(autoincrement())
+  access_token  String @db.LongText
+  refresh_token String @db.LongText
 }

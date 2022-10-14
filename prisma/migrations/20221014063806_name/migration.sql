@@ -1,7 +1,8 @@
 -- CreateTable
-CREATE TABLE `invoice` (
+CREATE TABLE `Token` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `amount` INTEGER NOT NULL,
+    `access_token` LONGTEXT NOT NULL,
+    `refresh_token` LONGTEXT NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
