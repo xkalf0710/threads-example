@@ -75,6 +75,13 @@ app.post("/shalgah", async(req, res)=> {
 
 
 app.get('/hvselt/id', async(req, res) => {
+ try{
+     const {id} = req.params;  
+     console.log(id);
+     res.status(200).json(data);
+ }catch(error){
+     res.status(400).json(error);
+ }
 
 });
 
