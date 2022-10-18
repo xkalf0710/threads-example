@@ -73,18 +73,72 @@ app.post("/shalgah", async(req, res)=> {
 
 //Иргэн эсвэл байгууллагын зээлийн мэдээллийг шалгах хүсэлт
 
-
-app.get('/hvselt/id', async(req, res) => {
+app.get('/hvselt/:id', async(req, res) => {
  try{
-     const {id} = req.params;  
+     
      console.log(id);
-     res.status(200).json(data);
+     const token = await prisma.token.findFirst()
+     const shalgah = await prisma.shalgah.findUnique({
+         where: {
+             id: parseInt(id)
+         }
+     })
+     console.log(shalgah);
+     const response = await axios.get('https://api.burenscore.mn/api/products', {
+         headers: {
+             'Content-Type': 'application/json', 
+             Authorization: 'Bearer' + token.access_token
+         }
+     })
+     console.log(response);
+     res.status(200).json(response);
  }catch(error){
      res.status(400).json(error);
  }
 
 });
 
+// Зээлийн мэдээлэл нийлүүлэх
+app.post('/insert', async(req, res) => {
+ try{
+    const response = await axios.post("https://api.burenscore.mn/api/sync/insert", {
+        headers:{
+            'Content-Type': 'application/xml', 
+            Authorization: 'Bearer' + token.access_token,
+            'Content-Length': Buffer.byteLength(customers)
+        },
+        body: {
+            customers
+        }, 
+        json: false
+    });
+    res.status(200).json(response);
+
+ }catch(error){
+     res.status(400).json(error);
+ }
+});
+
+// Илгээсэн хүсэлтийн үр дүнг шалгах
+
+app.post('/check_result', async(res, req) => {
+   try{
+    //const {request_id} = req.params;  
+     const response = await axios.post("https://api.burenscore.mn/api/sync/check_result", {
+         headers: {
+             'Content-Type': 'application/json', 
+             Authorization: 'Bearer' + token.access_token,
+         }, 
+         body: {
+            //"request_id": String,
+            "request_id": req.params,
+         }
+     });
+     res.status(200).json(response);
+   }catch(error){
+       res.status(400).json(error);
+   }
+});
 app.listen(3000, () => {
     console.log("server started");
   });
